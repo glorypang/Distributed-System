@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: distributed-bank
+
+  datasource:
+    shard-0:
+      jdbc-url: jdbc:mysql://localhost:3309/bank_shard_0
+      username: root
+      password: root1234
+      driver-class-name: com.mysql.cj.jdbc.Driver
+    shard-1:
+      jdbc-url: jdbc:mysql://localhost:3307/bank_shard_1
+      username: root
+      password: root1234
+      driver-class-name: com.mysql.cj.jdbc.Driver
+    shard-2:
+      jdbc-url: jdbc:mysql://localhost:3308/bank_shard_2
+      username: root
+      password: root1234
+      driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  sql:
+    init:
+      mode: never
+
+  # RabbitMQ 설정 추가
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+server:
+  port: 8080
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    com.example.tempbank: DEBUG
+
+sharding:
+  shard-count: 3
